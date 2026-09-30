@@ -1,0 +1,142 @@
+
+# Homework - Recursive Calls in Python
+# All exercises solved using recursion only.
+
+
+# ========================================
+# Exercise 1 - Print Numbers Down
+# ========================================
+
+def print_down(n: int) -> None:
+    """Print numbers from n down to 1."""
+
+    # Base case
+    if n == 0:
+        return
+
+    # Print the current number
+    print(n, end=" ")
+
+    # Recursive call
+    print_down(n - 1)
+
+
+# ========================================
+# Exercise 2 - Sum of Odd Numbers
+# ========================================
+
+def sum_odd(n: int) -> int:
+    """Return the sum of odd numbers from 1 to n."""
+
+    # Base case
+    if n <= 0:
+        return 0
+
+    # Skip even numbers
+    if n % 2 == 0:
+        return sum_odd(n - 1)
+
+    # Add odd numbers
+    return n + sum_odd(n - 1)
+
+
+# ========================================
+# Exercise 3 - Power Function
+# ========================================
+
+def power(base: float, exponent: int) -> float:
+    """Calculate base raised to a non-negative exponent."""
+
+    # Base case
+    if exponent == 0:
+        return 1
+
+    # Recursive call
+    return base * power(base, exponent - 1)
+
+
+# ========================================
+# Exercise 4 - Maximum in a List
+# ========================================
+
+def max_in_list(lst: list) -> int | float:
+    """Return the largest number in a non-empty list."""
+
+    # Base case
+    if len(lst) == 1:
+        return lst[0]
+
+    # Find the maximum in the rest of the list
+    max_rest = max_in_list(lst[1:])
+
+    # Compare with the first element
+    if lst[0] > max_rest:
+        return lst[0]
+
+    return max_rest
+
+
+# ========================================
+# Exercise 5 - Count Even Numbers
+# ========================================
+
+def count_even(lst: list[int]) -> int:
+    """Count even numbers in a list."""
+
+    # Base case
+    if not lst:
+        return 0
+
+    # Count the first element if even
+    if lst[0] % 2 == 0:
+        return 1 + count_even(lst[1:])
+
+    # Skip odd numbers
+    return count_even(lst[1:])
+
+
+# ========================================
+# Bonus - Sum of Digits
+# ========================================
+
+def sum_digits(n: int) -> int:
+    """Return the sum of digits of a non-negative integer."""
+
+    # Base case
+    if n == 0:
+        return 0
+
+    # Extract last digit
+    last_digit = n % 10
+
+    # Remove last digit
+    remaining = n // 10
+
+    # Recursive call
+    return last_digit + sum_digits(remaining)
+
+
+# ========================================
+# Main - Test All Exercises
+# ========================================
+
+if __name__ == "__main__":
+
+    print("EXERCISE 1 - PRINT DOWN")
+    print_down(5)
+    print()
+
+    print("\nEXERCISE 2 - SUM ODD")
+    print(sum_odd(7))
+
+    print("\nEXERCISE 3 - POWER")
+    print(power(2, 4))
+
+    print("\nEXERCISE 4 - MAX IN LIST")
+    print(max_in_list([3, 8, 2, 15, 6]))
+
+    print("\nEXERCISE 5 - COUNT EVEN")
+    print(count_even([2, 5, 8, 7, 6, 3, 10]))
+
+    print("\nBONUS - SUM DIGITS")
+    print(sum_digits(583))

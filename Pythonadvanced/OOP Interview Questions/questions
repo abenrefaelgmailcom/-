@@ -1,0 +1,507 @@
+חלק 1 – Basic Concepts: מושגי יסוד
+
+1. מה זה OOP?
+תכנות מונחה עצמים (Object-Oriented Programming) הוא סגנון תכנות שבו מארגנים את הקוד באמצעות אובייקטים.
+כל אובייקט יכול להכיל מידע (Attributes) ופעולות (Methods).
+לדוגמה, לאובייקט מסוג Dog יכולים להיות שם וגיל, והוא יכול לבצע פעולה בשם bark().
+
+
+2. מה ההבדל בין Class ל־Object?
+Class היא התבנית שמגדירה אילו תכונות ופעולות יהיו לאובייקטים. Object הוא מופע מסוים שנוצר מאותה תבנית.
+לכן אפשר ליצור מספר אובייקטים מאותה מחלקה, כאשר לכל אחד מהם נתונים משלו.
+
+
+3–4. מהו Constructor ומה עושה __init__?
+Constructor הוא מנגנון יצירת האובייקט. בפייתון, __new__ אחראית ליצירת האובייקט ו־__init__ לאתחול שלו.
+בתרגילים בסיסיים אנחנו בדרך כלל כותבים רק __init__, שמופעלת אוטומטית לאחר יצירת האובייקט.
+
+5. מהו self?
+self מתייחס לאובייקט הנוכחי ומאפשר לגשת לתכונות ולמתודות שלו.
+
+
+class Dog:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    def bark(self):
+        print(f"{self.name} says Woof!")
+
+
+dog = Dog("Rex", 3)
+dog.bark()
+
+כאשר מפעילים dog.bark(), פייתון מעבירה את dog כארגומנט self למתודה.
+
+=======================================
+
+חלק 2 – Classes and Objects
+
+7–8. איך יוצרים מחלקה ואובייקט?
+
+משתמשים במילה class כדי להגדיר מחלקה, ובשם המחלקה עם סוגריים כדי ליצור ממנה אובייקט.
+
+class Person:
+    def __init__(self, name):
+        self.name = name
+
+
+person = Person("John")
+
+9–12. Instance Attributes לעומת Class Attributes
+
+Instance Attribute היא תכונה השייכת לאובייקט מסוים. Class Attribute היא תכונה המוגדרת במחלקה עצמה ומשותפת כברירת מחדל לכל המופעים שלה.
+
+
+class Dog:
+    species = "Canine"  # Class attribute
+
+    def __init__(self, name):
+        self.name = name  # Instance attribute
+
+
+dog1 = Dog("Rex")
+dog2 = Dog("Max")
+
+print(dog1.name)
+print(dog2.name)
+
+print(dog1.species)
+print(Dog.species)
+
+תכונה  |       Instance  |        מחלקה
+שייכת ל־  |  אובייקט מסוים  |       המחלקה
+מוגדרת בדרך כלל  |   באמצעות self  |  בגוף המחלקה
+דוגמה  |        self.name    |  species
+גישה  |     dog.name     | Dog.species
+
+אפשר לגשת לתכונת מחלקה גם באמצעות אובייקט, למשל dog1.species. עם זאת, השמה כמו dog1.species = "Other" יוצרת בדרך כלל תכונת מופע חדשה שמסתירה את תכונת המחלקה עבור אותו אובייקט.
+
+
+=======================================
+
+3 – Methods
+13–16. שלושת סוגי המתודות
+Instance Method
+
+מתודה שפועלת על אובייקט
+
+מקבלת self ויכולה לקרוא ולשנות את התכונות של אותו אובייקט.
+
+Class Method
+
+מתודה שפועלת על המחלקה
+
+משתמשת בדקורטור @classmethod ומקבלת cls, שמתייחס למחלקה.
+
+Static Method
+
+מתודה שאינה צריכה גישה לאובייקט או למחלקה
+
+משתמשת בדקורטור @staticmethod ומתאימה לפעולות עזר שקשורות לוגית למחלקה.
+
+דוגמה לשלושת הסוגים:
+
+
+class Employee:
+    company = "Tech Ltd"
+
+    def __init__(self, name, salary):
+        self.name = name
+        self.salary = salary
+
+    # Instance method
+    def show_salary(self):
+        return self.salary
+
+    # Class method
+    @classmethod
+    def show_company(cls):
+        return cls.company
+
+    # Static method
+    @staticmethod
+    def is_valid_salary(salary):
+        return salary >= 0
+
+
+employee = Employee("Dana", 10000)
+
+print(employee.show_salary())
+print(Employee.show_company())
+print(Employee.is_valid_salary(5000))
+
+במקרה הזה, is_valid_salary() אינה זקוקה ל־self או ל־cls, ולכן staticmethod מתאימה לה.
+
+=========================================
+
+חלק 4 - Encapsulation
+
+17. מהי Encapsulation?
+
+כימוס (Encapsulation) הוא עיקרון של ארגון המידע והפעולות של האובייקט יחד, תוך שליטה באופן שבו קוד חיצוני ניגש למידע ומשנה אותו.
+
+לדוגמה, בחשבון בנק לא נרצה שכל קוד יוכל לשנות את היתרה ללא בדיקה. נעדיף לספק מתודות כגון deposit() ו־withdraw().
+
+18. מה המשמעות של __variable?
+
+בפייתון, שתי קווים תחתונים בתחילת שם תכונה מפעילים מנגנון שנקרא Name Mangling.
+
+לדוגמה:
+
+class Person:
+    def __init__(self):
+        self.__age = 30
+
+פייתון משנה את שם התכונה באופן פנימי לשם שכולל את שם המחלקה, כגון _Person__age.
+
+המנגנון מקשה על גישה מקרית לתכונה ומסייע למנוע התנגשויות שמות בירושה, אך הוא אינו מנגנון אבטחה ואינו הופך את התכונה לפרטית לחלוטין.
+
+20. איך עובדים Getter ו־Setter?
+
+Getter משמש לקריאת ערך, ו־Setter משמש לעדכון שלו, בדרך כלל עם אפשרות להוסיף בדיקות.
+
+בפייתון מקובל להשתמש ב־@property וב־@property_name.setter.
+
+
+class Person:
+    def __init__(self, age):
+        self.age = age
+
+    @property
+    def age(self):
+        return self.__age
+
+    @age.setter
+    def age(self, value):
+        if value < 0:
+            raise ValueError("Age cannot be negative")
+
+        self.__age = value
+
+
+person = Person(30)
+
+print(person.age)
+
+person.age = 35
+print(person.age)
+
+היתרון הוא שאפשר להשתמש בתחביר פשוט של תכונה, כגון person.age, ועדיין להפעיל בדיקות כאשר מעדכנים אותה.
+
+21. מה זה Name Mangling?
+
+זהו שינוי אוטומטי של שמות שמתחילים בשני קווים תחתונים ואינם מסתיימים בשני קווים תחתונים.
+
+למשל, __age במחלקה Person הופך באופן פנימי ל־_Person__age. הדבר שימושי במיוחד כאשר מחלקות בנות מגדירות תכונות בעלות שמות דומים לאלו של מחלקת האב.
+
+========================================
+
+חלק 5  – Inheritance
+22–23. מהי ירושה ולמה משתמשים בה?
+
+ירושה (Inheritance) מאפשרת למחלקה לקבל תכונות ומתודות ממחלקה אחרת. היא מסייעת לשימוש חוזר בקוד ולבניית היררכיה בין סוגים קשורים.
+
+לדוגמה, Dog ו־Cat הן סוגים של Animal.
+
+24. איך יוצרים מחלקת בת?
+
+כותבים את שם מחלקת האב בסוגריים:
+
+class Animal:
+    def eat(self):
+        print("Eating")
+
+
+class Dog(Animal):
+    pass
+
+
+dog = Dog()
+dog.eat()
+
+למרות שלא הגדרנו eat() במחלקה Dog, אפשר להפעיל אותה משום שהיא נירשת מ־Animal.
+
+25. מהו Method Overriding?
+
+דריסת מתודה פירושה שמחלקת בת מגדירה מחדש מתודה שירשה ממחלקת האב.
+
+class Animal:
+    def speak(self):
+        print("Animal sound")
+
+
+class Dog(Animal):
+    def speak(self):
+        print("Woof")
+
+כאשר נקרא ל־Dog().speak(), יופעל המימוש של Dog.
+
+26. מה עושה super()?
+
+super() מאפשרת לגשת למימוש הבא בסדר חיפוש המתודות (MRO). בירושה פשוטה, בדרך כלל מדובר במתודה של מחלקת האב.
+
+class Animal:
+    def __init__(self, name):
+        self.name = name
+
+
+class Dog(Animal):
+    def __init__(self, name, age):
+        super().__init__(name)
+        self.age = age
+
+כך אפשר להשתמש בקוד האתחול של Animal בלי לשכפל אותו.
+
+27. מה קורה אם מחלקת בת לא מממשת מתודה אבסטרקטית?
+
+אם מחלקת בת לא מממשת את כל המתודות האבסטרקטיות שירשה, היא נשארת אבסטרקטית ואי אפשר ליצור ממנה אובייקט.
+
+
+from abc import ABC, abstractmethod
+
+
+class Animal(ABC):
+    @abstractmethod
+    def speak(self):
+        pass
+
+
+class Dog(Animal):
+    pass
+
+
+# This raises TypeError:
+# dog = Dog()
+
+========================================
+
+
+חלק 6 – Polymorphism
+28–30. מהו פולימורפיזם?
+
+פולימורפיזם (Polymorphism) מאפשר להשתמש באותו ממשק או באותה מתודה עם אובייקטים מסוגים שונים, כאשר כל אובייקט מספק את ההתנהגות המתאימה לו.
+
+
+class Dog:
+    def speak(self):
+        print("Woof")
+
+
+class Cat:
+    def speak(self):
+        print("Meow")
+
+
+animals = [Dog(), Cat()]
+
+for animal in animals:
+    animal.speak()
+
+התוצאה:
+
+Woof
+Meow
+
+למרות שהאובייקטים מסוגים שונים, אפשר להפעיל על שניהם את speak(). בפייתון הדבר אפשרי גם בלי מחלקת אב משותפת, באמצעות Duck Typing.
+
+
+===============================================
+
+
+חלק 7 – Special Methods
+31. מהן Dunder Methods?
+
+אלו מתודות מיוחדות ששמותיהן מתחילים ומסתיימים בשני קווים תחתונים (Double Underscore), למשל __init__ ו־__str__.
+
+פייתון מפעילה אותן אוטומטית במצבים מסוימים, כגון הדפסה, השוואה או קריאה ל־len().
+
+32–35. ארבע מתודות חשובות
+
+מתודה
+
+
+
+תפקיד
+
+
+
+
+__str__
+
+
+
+מחזירה ייצוג קריא של האובייקט
+
+
+
+
+__repr__
+
+
+
+מחזירה ייצוג שמיועד בעיקר למפתחים ולדיבוג
+
+
+
+
+__len__
+
+
+
+מגדירה מה תחזיר הפונקציה len()
+
+
+
+
+__eq__
+
+
+
+מגדירה כיצד מתבצעת השוואת שוויון באמצעות ==
+
+דוגמה שמשלבת את כולן:
+
+
+class Team:
+    def __init__(self, name, members):
+        self.name = name
+        self.members = members
+
+    def __str__(self):
+        return f"Team: {self.name}"
+
+    def __repr__(self):
+        return f"Team({self.name!r}, {self.members!r})"
+
+    def __len__(self):
+        return len(self.members)
+
+    def __eq__(self, other):
+        if not isinstance(other, Team):
+            return NotImplemented
+
+        return (
+            self.name == other.name
+            and self.members == other.members
+        )
+
+
+team = Team("Python", ["Dana", "John"])
+
+print(team)
+print(repr(team))
+print(len(team))
+
+==================================================
+
+חלק 8 – ארבעת תרגילי הקוד
+תרגיל 1 – Dog
+
+ניצור מחלקה עם שם וגיל ומתודה שמדפיסה Woof.
+
+
+class Dog:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    def bark(self):
+        print("Woof")
+
+
+dog = Dog("Rex", 3)
+dog.bark()
+
+יצרנו מחלקה עם שתי תכונות מופע ומתודה אחת. בעת יצירת dog, הבנאי מאתחל את השם והגיל. לאחר מכן bark() מדפיסה את הצליל המבוקש.
+
+תרגיל 2 – BankAccount
+
+ניצור חשבון בנק עם בעלים ויתרה, ונוסיף פעולות להפקדה ולמשיכה.
+
+
+class BankAccount:
+    def __init__(self, owner, balance):
+        self.owner = owner
+        self.balance = balance
+
+    def deposit(self, amount):
+        if amount <= 0:
+            print("Amount must be positive")
+            return
+
+        self.balance += amount
+
+    def withdraw(self, amount):
+        if amount <= 0:
+            print("Amount must be positive")
+            return
+
+        if amount > self.balance:
+            print("Insufficient funds")
+            return
+
+        self.balance -= amount
+
+
+account = BankAccount("Dana", 1000)
+
+account.deposit(500)
+account.withdraw(200)
+
+print(account.balance)
+
+התוצאה היא 1300.
+
+הוספנו בדיקות פשוטות כדי למנוע הפקדות ומשיכות בסכומים לא חיוביים, וכן משיכה גדולה מהיתרה. במערכת בנקאית אמיתית נדרשים מנגנוני אבטחה ובקרה נוספים.
+
+תרגיל 3 – Animal, Dog ו־Cat
+
+כאן נתרגל ירושה ודריסת מתודות.
+
+
+class Animal:
+    def speak(self):
+        print("Animal sound")
+
+
+class Dog(Animal):
+    def speak(self):
+        print("Woof")
+
+
+class Cat(Animal):
+    def speak(self):
+        print("Meow")
+
+
+dog = Dog()
+cat = Cat()
+
+dog.speak()
+cat.speak()
+
+שתי מחלקות הבת יורשות מ־Animal, אבל כל אחת דורסת את speak() ומספקת מימוש משלה.
+
+תרגיל 4 – Person עם __str__
+
+ניצור מחלקה שמחזירה בדיוק את הפורמט שהתבקש במטלה.
+
+
+class Person:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    def __str__(self):
+        return f"Person(name={self.name}, age={self.age})"
+
+
+person = Person("John", 30)
+print(person)
+
+התוצאה:
+
+Person(name=John, age=30)
+
+המתודה __str__ מחזירה מחרוזת, והפקודה print(person) מדפיסה אותה.
