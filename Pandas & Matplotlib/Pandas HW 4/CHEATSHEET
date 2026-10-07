@@ -1,0 +1,68 @@
+"Find duplicates"
+        ↓
+duplicated()
+
+
+"Remove duplicates"
+        ↓
+drop_duplicates()
+
+
+"Is this value missing?"
+        ↓
+isna()
+
+
+"Is this value NOT missing?"
+        ↓
+notna()
+
+
+"Count missing values"
+        ↓
+isna().sum()
+
+
+"Fill missing values"
+        ↓
+fillna()
+
+
+"Remove missing values"
+        ↓
+dropna()
+
+
+"At least X valid values"
+        ↓
+dropna(thresh=X)
+
+
+"Join two tables"
+        ↓
+pd.merge()
+
+
+"Only matching records"
+        ↓
+INNER JOIN
+
+
+"Everything from the left"
+        ↓
+LEFT JOIN
+
+
+"Everything from the right"
+        ↓
+RIGHT JOIN
+
+
+"Everything from both"
+        ↓
+OUTER JOIN
+
+
+"Every possible combination"
+        ↓
+CROSS JOIN

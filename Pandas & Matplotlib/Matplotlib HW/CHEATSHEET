@@ -1,0 +1,26 @@
+Cheat Sheet קצר — Matplotlib
+מטרה	קוד
+גרף קו	plt.plot(x, y)
+Scatter	plt.scatter(x, y)
+Bar	plt.bar(x, y)
+Histogram	plt.hist(data)
+כותרת	plt.title()
+שם לציר X	plt.xlabel()
+שם לציר Y	plt.ylabel()
+מקרא	plt.legend()
+הגבלת X	plt.xlim()
+הגבלת Y	plt.ylim()
+Figure חדשה	plt.figure()
+מספר גרפים	plt.subplots()
+שמירת תמונה	plt.savefig()
+הצגה	plt.show()
+סידור Subplots	plt.tight_layout()
+מספר קבוצות Histogram	bins=
+
+והכי חשוב מבחינת החשיבה:
+
+plot()    → מגמה / קו
+scatter() → קשר בין שני משתנים
+bar()     → השוואה בין קטגוריות
+hist()    → התפלגות של משתנה מספרי
+subplots()→ כמה גרפים באותה Figure

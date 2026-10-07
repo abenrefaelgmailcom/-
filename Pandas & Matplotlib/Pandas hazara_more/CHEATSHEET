@@ -1,0 +1,18 @@
+המושגים החשובים מכל התרגיל
+מה מבקשים?	Pandas
+מיון	sort_values()
+סדר עולה	ascending=True
+סדר יורד	ascending=False
+כמה פעמים כל ערך מופיע	value_counts()
+יצירת קבוצות	groupby()
+מספר איברים בקבוצה	size()
+ממוצע	mean()
+מספר חישובים יחד	agg()
+ערכים ייחודיים	unique()
+בדיקת כפילויות	duplicated()
+מחיקת כפילויות	drop_duplicates()
+האם חסר?	isna()
+האם לא חסר?	notna()
+מילוי חסרים	fillna()
+מחיקת חסרים	dropna()
+לפחות X ערכים תקינים	thresh=X
